@@ -1,4 +1,5 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
+import { TaskInterface } from '../app';
 
 @Component({
   imports: [],
@@ -10,9 +11,19 @@ import { Component, input } from '@angular/core';
     border-radius: 15px;
     display: flex;
     gap: 8px;
-  }`,
+  }
+  
+  .completed-task {
+    background: green;
+  }
+  `,
   templateUrl: './task.html',
 })
 export class Task {
-  taskName = input<string>('Valor por defecto');
+  task = input.required<TaskInterface>();
+  checkboxValue = output<number>();
+
+  updateCompletion() {
+    this.checkboxValue.emit(this.task().id);
+  }
 }
